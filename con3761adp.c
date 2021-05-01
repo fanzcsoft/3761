@@ -1,19 +1,19 @@
 /******************************************************************************
 
-                  °æÈ¨ËùÓÐ (C), 2010-2015, ¹úÍøµçÁ¦Í¨ÐÅÓëÓÃµç¼¼Êõ·Ö¹«Ë¾
+                  ç‰ˆæƒæ‰€æœ‰ (C), 2010-2015, å›½ç½‘ç”µåŠ›é€šä¿¡ä¸Žç”¨ç”µæŠ€æœ¯åˆ†å…¬å¸
 
  ******************************************************************************
-  ÎÄ ¼þ Ãû   : con3761adp.c
-  °æ ±¾ ºÅ   : ³õ¸å
-  ×÷    Õß   : liming
-  Éú³ÉÈÕÆÚ   : 2013Äê4ÔÂ8ÈÕ ÐÇÆÚÒ»
-  ×î½üÐÞ¸Ä   :
-  ¹¦ÄÜÃèÊö   : ¼¯ÖÐÆ÷376.1Ð­Òé½âÎöÊÊÅä²ã Ô´ÎÄ¼þ 
-  º¯ÊýÁÐ±í   :
-  ÐÞ¸ÄÀúÊ·   :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ8ÈÕ ÐÇÆÚÒ»
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ´´½¨ÎÄ¼þ
+  æ–‡ ä»¶ å   : con3761adp.c
+  ç‰ˆ æœ¬ å·   : åˆç¨¿
+  ä½œ    è€…   : liming
+  ç”Ÿæˆæ—¥æœŸ   : 2013å¹´4æœˆ8æ—¥ æ˜ŸæœŸä¸€
+  æœ€è¿‘ä¿®æ”¹   :
+  åŠŸèƒ½æè¿°   : é›†ä¸­å™¨376.1åè®®è§£æžé€‚é…å±‚ æºæ–‡ä»¶ 
+  å‡½æ•°åˆ—è¡¨   :
+  ä¿®æ”¹åŽ†å²   :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ8æ—¥ æ˜ŸæœŸä¸€
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : åˆ›å»ºæ–‡ä»¶
 
 ******************************************************************************/
 
@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define   CM_DEG_ON             // µ÷ÊÔ¿ª¹Ø
+#define   CM_DEG_ON             // è°ƒè¯•å¼€å…³
 //#undef    CM_DEG_ON
 
 #ifdef CM_DEG_ON  
@@ -32,32 +32,32 @@
 #endif 
 
 
-BOOL g_bcmInit = FALSE;         // ³õÊ¼»¯
-UINT8 g_ucCmPFCSend = 0;        // µ±Ç°Ó¦¸Ã·¢ËÍµÄÐòºÅ
-UINT8 g_ucCmPFCRecv = 0;        // µ±Ç°Ó¦¸Ã½ÓÊÕµÄÐòºÅ
+BOOL g_bcmInit = FALSE;         // åˆå§‹åŒ–
+UINT8 g_ucCmPFCSend = 0;        // å½“å‰åº”è¯¥å‘é€çš„åºå·
+UINT8 g_ucCmPFCRecv = 0;        // å½“å‰åº”è¯¥æŽ¥æ”¶çš„åºå·
 
 
 sCmdMap g_cmdMap[] = 
 {
-    // {   ÊÊÅä²ãÃüÁî×Ö,   3761ÃüÁî×Ö  , ·â×°ÃüÁîÊ±µÄÖ÷¶¯ÐÔ} 
+    // {   é€‚é…å±‚å‘½ä»¤å­—,   3761å‘½ä»¤å­—  , å°è£…å‘½ä»¤æ—¶çš„ä¸»åŠ¨æ€§} 
     {CM_CMD_UNKOWN,            CMD_AFN_F_UNKOWN,                MT_PRM_UNKWON},
-    //afn 00 È·ÈÏ·ñÈÏ
+    //afn 00 ç¡®è®¤å¦è®¤
     {CMD_ALL_OK,               CMD_AFN_0_F1_ALL_OK,             MT_PRM_PASIVE},
     {CMD_ALL_DENY,             CMD_AFN_0_F2_ALL_DENY,           MT_PRM_PASIVE},
     {CMD_ONE_BY_ONE,           CMD_AFN_0_F3_ONE_BY_ONE,         MT_PRM_PASIVE},
 
-    //(1)¸´Î»ÃüÁî£¨AFN=01H£©
+    //(1)å¤ä½å‘½ä»¤ï¼ˆAFN=01Hï¼‰
     {CMD_HARD_INIT,            CMD_AFN_1_F1_HARD_INIT,          MT_PRM_ACTIVE},
     {CMD_DATA_INIT,            CMD_AFN_1_F2_DATA_INIT,          MT_PRM_ACTIVE},
     {CMD_FACTORY_RESET,        CMD_AFN_1_F3_FACTORY_RESET,      MT_PRM_ACTIVE},
     {CMD_PARA_INIT,            CMD_AFN_1_F4_PARA_INIT,          MT_PRM_ACTIVE},
 
-    //(2) Á´Â·½Ó¿Ú¼ì²â£¨AFN=02H£©
+    //(2) é“¾è·¯æŽ¥å£æ£€æµ‹ï¼ˆAFN=02Hï¼‰
     {CMD_LOG_IN,               CMD_AFN_2_F1_LOG_IN,             MT_PRM_ACTIVE},
     {CMD_LOG_OUT,              CMD_AFN_2_F2_LOG_OUT,            MT_PRM_ACTIVE},
     {CMD_HEART_BEAT,           CMD_AFN_2_F3_HEART_BEAT,         MT_PRM_ACTIVE},
 
-    /* (3) ÉèÖÃ²ÎÊý£¨AFN == 04H£© */ 
+    /* (3) è®¾ç½®å‚æ•°ï¼ˆAFN == 04Hï¼‰ */ 
     //{CMD_CFG_NOT_ELEC,         CMD_AFN_3_F1_RELAY_CTRL,       MT_PRM_ACTIVE},
     {CMD_CFG_TML_UP,           CMD_AFN_4_F1_TML_UP_CFG,         MT_PRM_ACTIVE},
     {CMD_CFG_TML_POWER,        CMD_AFN_4_F10_TML_POWER_CFG,     MT_PRM_ACTIVE},
@@ -68,7 +68,7 @@ sCmdMap g_cmdMap[] =
     {CMD_GO_AUTO_1,            CMD_AFN_4_F67_GOP_AUTO_1,        MT_PRM_ACTIVE},
     {CMD_GO_AUTO_2,            CMD_AFN_4_F68_GOP_AUTO_2,        MT_PRM_ACTIVE},
 
-    /* (4) ¿ØÖÆÃüÁî(AFN == 05H£© */ 
+    /* (4) æŽ§åˆ¶å‘½ä»¤(AFN == 05Hï¼‰ */ 
     {CMD_CTRL_CHECK_TIME,      CMD_AFN_5_F31_CHECK_TIME,        MT_PRM_ACTIVE},
     {CMD_PERMIT_TALK_GO,       CMD_AFN_5_F27_PERMIT_TALK_GO,    MT_PRM_PASIVE},
     {CMD_PERMIT_TALK_STOP,     CMD_AFN_5_F35_PERMIT_TALK_STOP,  MT_PRM_PASIVE},
@@ -78,7 +78,7 @@ sCmdMap g_cmdMap[] =
     {CMD_AUTO_REPORT_GO,       CMD_AFN_5_F29_AUTO_SAY_GO,       MT_PRM_PASIVE},
     {CMD_AUTO_REPORT_STOP,     CMD_AFN_5_F37_AUTO_SAY_STOP,     MT_PRM_PASIVE},
 
-    /* (5) ÇëÇóÖÕ¶ËÅäÖÃ¼°ÐÅÏ¢ (AFN == 09H£© */ 
+    /* (5) è¯·æ±‚ç»ˆç«¯é…ç½®åŠä¿¡æ¯ (AFN == 09Hï¼‰ */ 
     {CMD_AFN_TML_VERSION,      CMD_AFN_9_F1_TML_VERSION,       MT_PRM_PASIVE},
     {CMD_AFN_TML_INPUT_OUT,    CMD_AFN_9_F2_TML_INPUT_OUT,     MT_PRM_PASIVE},
     {CMD_TML_OTHER_CFG,        CMD_AFN_9_F3_TML_OTHER_CFG,     MT_PRM_PASIVE},
@@ -89,7 +89,7 @@ sCmdMap g_cmdMap[] =
     {CMD_SUPPORT_EVNT_CFG,     CMD_AFN_9_F8_SUPPORT_EVNT_CFG,  MT_PRM_PASIVE},
 
 
-    /* (6) ²éÑ¯²ÎÊý (AFN == 0AH£© */ 
+    /* (6) æŸ¥è¯¢å‚æ•° (AFN == 0AHï¼‰ */ 
     {CMD_CFG_TML_UP_Q,         CMD_AFN_A_F1_TML_UP_CFG,        MT_PRM_PASIVE},
     {CMD_CFG_TML_POWER_Q,      CMD_AFN_A_F10_TML_POWER_CFG,    MT_PRM_PASIVE},
     {CMD_CFG_ASK_1_Q,          CMD_AFN_A_F38_CFG_ASK_1,        MT_PRM_PASIVE},
@@ -100,7 +100,7 @@ sCmdMap g_cmdMap[] =
     {CMD_GOP_AUTO_2_Q,         CMD_AFN_A_F68_GOP_AUTO_2,       MT_PRM_PASIVE},
 
 
-    /* (12) ÇëÇó1ÀàÊý¾Ý£¨AFN=0CH£© */
+    /* (12) è¯·æ±‚1ç±»æ•°æ®ï¼ˆAFN=0CHï¼‰ */
     {CMD_TML_CLOCK,            CMD_AFN_C_F2_TML_CLOCK,         MT_PRM_PASIVE},
     {CMD_CURNT_PQUI,           CMD_AFN_C_F25_POWER_RATE_CUR,   MT_PRM_PASIVE},
     {CMD_DC_RLTM_DATA,         CMD_AFN_C_F73_DC_RLTM_DATA,     MT_PRM_PASIVE},
@@ -110,17 +110,17 @@ sCmdMap g_cmdMap[] =
     {CMD_FRTH_HAVE_POWR_C,     CMD_AFN_C_F129_FRTH_HAVE_POWR_C,MT_PRM_PASIVE},
     {CMD_FRTH_NONE_POWR_C,     CMD_AFN_C_F130_FRTH_NONE_POWR_C,MT_PRM_PASIVE},
 
-    /* (13) ÇëÇó2ÀàÊý¾Ý£¨AFN=0DH£© */
+    /* (13) è¯·æ±‚2ç±»æ•°æ®ï¼ˆAFN=0DHï¼‰ */
     {CMD_UBLN_OVER_D,          CMD_AFN_D_F28_UBLN_OVER_D,    MT_PRM_PASIVE},
     {CMD_UBLN_OVER_M,          CMD_AFN_D_F36_UBLN_OVER_M,    MT_PRM_PASIVE},
 
-    /* ¶ÁÈ¡·ÇµçÆøÁ¿*/
+    /* è¯»å–éžç”µæ°”é‡*/
     {CMD_NELC_TEMP,            CMD_AFN_C_F17_TOTAL_POWER_HAVE,    MT_PRM_PASIVE},
     {CMD_NELC_HUMi,            CMD_AFN_C_F18_TOTAL_POWER_NONE,    MT_PRM_PASIVE},
 
     
 
-    // ÔÚÕâÖ®ÉÏÌí¼ÓÐÂµÄÓ³Éä
+    // åœ¨è¿™ä¹‹ä¸Šæ·»åŠ æ–°çš„æ˜ å°„
     {CM_CMD_MAX,            CMD_AFN_FN_MAX}
 };
 
@@ -144,18 +144,18 @@ void vcmFree(char *pMem)
 }
 #endif
 /*****************************************************************************
- º¯ Êý Ãû  : ecm_3761_init
- ¹¦ÄÜÃèÊö  : Ð­Òé³õÊ¼»¯
- ÊäÈë²ÎÊý  : sCmInit * psCmInit  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : ecm_3761_init
+ åŠŸèƒ½æè¿°  : åè®®åˆå§‹åŒ–
+ è¾“å…¥å‚æ•°  : sCmInit * psCmInit  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê4ÔÂ8ÈÕ ÐÇÆÚÒ»
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´4æœˆ8æ—¥ æ˜ŸæœŸä¸€
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eCmErr ecm_3761_init(sCmInit * psCmInit)
@@ -179,19 +179,19 @@ eCmErr ecm_3761_init(sCmInit * psCmInit)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : bcm_valid_3761_packet
- ¹¦ÄÜÃèÊö  : ÅÐ¶ÏÒ»¸öbuffÊÇ²»ÊÇÒ»¸öÓÐÐ§µÄ3761Ö¡
- ÊäÈë²ÎÊý  : UINT8  *pinBuf  
+ å‡½ æ•° å  : bcm_valid_3761_packet
+ åŠŸèƒ½æè¿°  : åˆ¤æ–­ä¸€ä¸ªbuffæ˜¯ä¸æ˜¯ä¸€ä¸ªæœ‰æ•ˆçš„3761å¸§
+ è¾“å…¥å‚æ•°  : UINT8  *pinBuf  
              UINT16 usLen    
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 BOOL bcm_valid_3761_packet(UINT8  *pinBuf, UINT16 usLen)
@@ -209,19 +209,19 @@ BOOL bcm_valid_3761_packet(UINT8  *pinBuf, UINT16 usLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : vCmSetEC
- ¹¦ÄÜÃèÊö  : ÉèÖÃÊÂ¼þ¼ÆÊýÆ÷
- ÊäÈë²ÎÊý  : UINT8 ucEC1  ÖØÒªÊÂ¼þ
-             UINT8 ucEC2  Ò»°ãÊÂ¼þ
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : vCmSetEC
+ åŠŸèƒ½æè¿°  : è®¾ç½®äº‹ä»¶è®¡æ•°å™¨
+ è¾“å…¥å‚æ•°  : UINT8 ucEC1  é‡è¦äº‹ä»¶
+             UINT8 ucEC2  ä¸€èˆ¬äº‹ä»¶
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void vCmSetEC(UINT8 ucEC1, UINT8 ucEC2)
@@ -230,18 +230,18 @@ void vCmSetEC(UINT8 ucEC1, UINT8 ucEC2)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : bCmSetPw
- ¹¦ÄÜÃèÊö  : ÉèÖÃÃÜÂë , ²»×ã16Î»£¬Ç°Ãæ×Ô¶¯²¹0 ¶àÓÚ16×Ö·û£¬È¡×îÇ°16×Ö·û
- ÊäÈë²ÎÊý  : char *pw  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : bCmSetPw
+ åŠŸèƒ½æè¿°  : è®¾ç½®å¯†ç  , ä¸è¶³16ä½ï¼Œå‰é¢è‡ªåŠ¨è¡¥0 å¤šäºŽ16å­—ç¬¦ï¼Œå–æœ€å‰16å­—ç¬¦
+ è¾“å…¥å‚æ•°  : char *pw  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 BOOL bCmSetPw(char *pw)
@@ -251,21 +251,21 @@ BOOL bCmSetPw(char *pw)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : ecm_find_frist_valid_pack
- ¹¦ÄÜÃèÊö  : ÕÒµ½Ò»¸öÓÐÐ§Ö¡µÄÎ»ÖÃ¼°³¤¶È
- ÊäÈë²ÎÊý  : UINT8  *pinBuf       
+ å‡½ æ•° å  : ecm_find_frist_valid_pack
+ åŠŸèƒ½æè¿°  : æ‰¾åˆ°ä¸€ä¸ªæœ‰æ•ˆå¸§çš„ä½ç½®åŠé•¿åº¦
+ è¾“å…¥å‚æ•°  : UINT8  *pinBuf       
              UINT16 usLen         
              UINT16 *pusFirstOff  
              UINT16 *pusFirstLen  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eCmErr ecm_find_frist_valid_pack(UINT8  *pinBuf, UINT16 usLen, UINT16 *pusFirstOff, UINT16 *pusFirstLen)
@@ -276,20 +276,20 @@ eCmErr ecm_find_frist_valid_pack(UINT8  *pinBuf, UINT16 usLen, UINT16 *pusFirstO
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : ecm_3761_pack
- ¹¦ÄÜÃèÊö  : Ð­Òé·â×°
- ÊäÈë²ÎÊý  : sCmPacket* psCmPacket  
+ å‡½ æ•° å  : ecm_3761_pack
+ åŠŸèƒ½æè¿°  : åè®®å°è£…
+ è¾“å…¥å‚æ•°  : sCmPacket* psCmPacket  
              UINT8 * pBuf           
              UINT16 *pusBufLen       
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
@@ -344,7 +344,7 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
         return MT_ERR_PARA;
     } 
  
-    // »ñÈ¡ÃüÁîÀàÐÍ¼°Ö÷¶¯ÐÔ
+    // èŽ·å–å‘½ä»¤ç±»åž‹åŠä¸»åŠ¨æ€§
     emtCmd = eGetMtCmd(psCmPacket->sCmdData[0].eCmd);
     eAfn   = eGetCmdAfn(emtCmd);
     if(AFN_NULL == eAfn)
@@ -373,7 +373,7 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
         ePrm = TRUE;
     }
    
-    // È·ÈÏÖ¡·¢ËÍ¼ÆÊý
+    // ç¡®è®¤å¸§å‘é€è®¡æ•°
     if(psCmPacket->bReSend == TRUE)
     {
        ucPFC = g_ucCmPFCSend-2;
@@ -385,7 +385,7 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
         g_ucCmPFCSend += 2;
     }
 
-    // ¹¹ÔìemtPack()²ÎÊý
+    // æž„é€ emtPack()å‚æ•°
     psPack->sAddress = psCmPacket->sAddress;
     psPack->eAFN     = eAfn;
     psPack->eDir     = eDir;
@@ -398,17 +398,17 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
     psPack->bTP      = bmt_have_tp(eAfn, eDir);
 
     // pw
-    // ×Ô¶¯È¡³õÊ¼»¯ÉèÖÃµÄPW
+    // è‡ªåŠ¨å–åˆå§‹åŒ–è®¾ç½®çš„PW
     
     // tp
-    // ×Ô¶¯È¡µÃµ±Ç°µÄÊ±¼ä
+    // è‡ªåŠ¨å–å¾—å½“å‰çš„æ—¶é—´
     
     // ec
-    // ×Ô¶¯È¡µ±Ç°ÉèÖÃµÄÊÂ¼þ¼ÆÊý, ÇëÓÐÊÂ¼þÉèÖÃ vCmSetEC
+    // è‡ªåŠ¨å–å½“å‰è®¾ç½®çš„äº‹ä»¶è®¡æ•°, è¯·æœ‰äº‹ä»¶è®¾ç½® vCmSetEC
 
     
 
-    // µ÷ÓÃ emtPack()
+    // è°ƒç”¨ emtPack()
     psPack->usDataNum =ucCmdNum;
 
     for(i = 0; i < ucCmdNum; i++)
@@ -438,7 +438,7 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
         } 
     }
 
-    // µ÷ÓÃ·â×°api
+    // è°ƒç”¨å°è£…api
      eRet = emtPack(psPack, pusBufLen, pBuf);
      if(eRet != MT_OK)
     {
@@ -454,20 +454,20 @@ eCmErr ecm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf, UINT16 *pusBufLen)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : ecm_3761_unpack
- ¹¦ÄÜÃèÊö  : ½âÎö±¨ÎÄ
- ÊäÈë²ÎÊý  : UINT8 * pBuf           
+ å‡½ æ•° å  : ecm_3761_unpack
+ åŠŸèƒ½æè¿°  : è§£æžæŠ¥æ–‡
+ è¾“å…¥å‚æ•°  : UINT8 * pBuf           
              UINT16 usBufLen        
              sCmPacket* psCmPacket  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ21ÈÕ ÐÇÆÚ¶þ
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ21æ—¥ æ˜ŸæœŸäºŒ
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eCmErr ecm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
@@ -488,7 +488,7 @@ eCmErr ecm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
         return MT_ERR_UNCOMP;
     }
 
-    // ÅÐ¶ÏÊÇ·ñÎªÒ»¸öÓÐÐ§Ö¡
+    // åˆ¤æ–­æ˜¯å¦ä¸ºä¸€ä¸ªæœ‰æ•ˆå¸§
     eMtErr eRet = MT_OK;
     int i = 0;
     //UINT8 ucPFC = 0;
@@ -532,7 +532,7 @@ eCmErr ecm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
          return MT_ERR_PFC;
       }
 
-      // ´¦ÀítpÂß¼­
+      // å¤„ç†tpé€»è¾‘
       if(bMtTimeoutTP(&(psmtPack->sTP)) == TRUE)
       {
           vcmFree(pUnpackTmp);
@@ -566,18 +566,18 @@ eCmErr ecm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : ecmGetCmdAfn
- ¹¦ÄÜÃèÊö  : »ñµÃÃüÁî¶ÔÓ¦µÄÀà
- ÊäÈë²ÎÊý  : eCmCmd eCmd  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : ecmGetCmdAfn
+ åŠŸèƒ½æè¿°  : èŽ·å¾—å‘½ä»¤å¯¹åº”çš„ç±»
+ è¾“å…¥å‚æ•°  : eCmCmd eCmd  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê8ÔÂ21ÈÕ ÐÇÆÚÈý
-    ×÷    Õß   : liming
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´8æœˆ21æ—¥ æ˜ŸæœŸä¸‰
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eMtAFN ecmGetCmdAfn(eCmCmd eCmd)
@@ -589,18 +589,18 @@ eMtAFN ecmGetCmdAfn(eCmCmd eCmd)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : eGetMtCmd
- ¹¦ÄÜÃèÊö  : cmCMD µ½ MtCMD×öÊÊÅä
- ÊäÈë²ÎÊý  : eCmCmd cmCMD  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : eGetMtCmd
+ åŠŸèƒ½æè¿°  : cmCMD åˆ° MtCMDåšé€‚é…
+ è¾“å…¥å‚æ•°  : eCmCmd cmCMD  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ28ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ28æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eMtCmd eGetMtCmd(eCmCmd cmCMD)
@@ -628,18 +628,18 @@ eMtCmd eGetMtCmd(eCmCmd cmCMD)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : eGetCmCmd
- ¹¦ÄÜÃèÊö  : mtCMD µ½cmCMD ×öÊÊÅä
- ÊäÈë²ÎÊý  : eMtCmd mtCMD  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : eGetCmCmd
+ åŠŸèƒ½æè¿°  : mtCMD åˆ°cmCMD åšé€‚é…
+ è¾“å…¥å‚æ•°  : eMtCmd mtCMD  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ28ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ28æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eCmCmd eGetCmCmd(eMtCmd mtCMD)
@@ -662,18 +662,18 @@ eCmCmd eGetCmCmd(eMtCmd mtCMD)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : ecmGetPrm
- ¹¦ÄÜÃèÊö  : Í¨¹ýÊÊÅä²ãµÄÃüÁî£¬»ñµÃÆä¶ÔÓ¦µÄÖ÷¶¯ÐÔ
- ÊäÈë²ÎÊý  : eCmCmd cmCMD  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ å‡½ æ•° å  : ecmGetPrm
+ åŠŸèƒ½æè¿°  : é€šè¿‡é€‚é…å±‚çš„å‘½ä»¤ï¼ŒèŽ·å¾—å…¶å¯¹åº”çš„ä¸»åŠ¨æ€§
+ è¾“å…¥å‚æ•°  : eCmCmd cmCMD  
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê5ÔÂ29ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´5æœˆ29æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eMtPRM ecmGetPrm(eCmCmd cmCMD)
@@ -695,19 +695,19 @@ eMtPRM ecmGetPrm(eCmCmd cmCMD)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : emtTransAppData_cm_2_mt
- ¹¦ÄÜÃèÊö  : ½«¶ÔÓ¦ÃüÁîµÄÊÊÅä²ãÓ¦ÓÃ²ãÊý¾Ý×ª»»ÎªÐ­Òé²ãÊý¾Ý
- ÊäÈë²ÎÊý  : eMtCmd emtCmd       
+ å‡½ æ•° å  : emtTransAppData_cm_2_mt
+ åŠŸèƒ½æè¿°  : å°†å¯¹åº”å‘½ä»¤çš„é€‚é…å±‚åº”ç”¨å±‚æ•°æ®è½¬æ¢ä¸ºåè®®å±‚æ•°æ®
+ è¾“å…¥å‚æ•°  : eMtCmd emtCmd       
              uCmApp *pcmAppData              
- Êä³ö²ÎÊý  : uMtApp *pmtAppData  
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : uMtApp *pmtAppData  
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê6ÔÂ9ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´6æœˆ9æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eMtCmd emtTransAppData_cm_2_mt(eMtCmd emtCmd, uCmApp *pcmAppData, uMtApp *pmtAppData)
@@ -859,19 +859,19 @@ eMtCmd emtTransAppData_cm_2_mt(eMtCmd emtCmd, uCmApp *pcmAppData, uMtApp *pmtApp
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : emtTransAppData_mt_2_cm
- ¹¦ÄÜÃèÊö  : ½«¶ÔÓ¦Ð­ÃüÁîµÄÒé²ãÊý¾Ý×ª»»ÎªÊÊÅä²ãÓ¦ÓÃ²ãÊý¾Ý
- ÊäÈë²ÎÊý  : eMtCmd emtCmd       
+ å‡½ æ•° å  : emtTransAppData_mt_2_cm
+ åŠŸèƒ½æè¿°  : å°†å¯¹åº”åå‘½ä»¤çš„è®®å±‚æ•°æ®è½¬æ¢ä¸ºé€‚é…å±‚åº”ç”¨å±‚æ•°æ®
+ è¾“å…¥å‚æ•°  : eMtCmd emtCmd       
              uMtApp *pmtAppData  
- Êä³ö²ÎÊý  : uCmApp *pcmAppData  
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : uCmApp *pcmAppData  
+ è¿” å›ž å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê6ÔÂ9ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´6æœˆ9æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eMtCmd emtTransAppData_mt_2_cm(eMtCmd emtCmd, uMtApp *pmtAppData, uCmApp *pcmAppData)
@@ -1037,19 +1037,19 @@ eMtCmd emtTransAppData_mt_2_cm(eMtCmd emtCmd, uMtApp *pmtAppData, uCmApp *pcmApp
 
 
 /*****************************************************************************
- º¯ Êý Ãû  : ncm_3761_pack
- ¹¦ÄÜÃèÊö  : 3761ÊÊÅä²ã·â×°½Ó¿Ú
- ÊäÈë²ÎÊý  : sCmPacket* psCmPacket  
+ å‡½ æ•° å  : ncm_3761_pack
+ åŠŸèƒ½æè¿°  : 3761é€‚é…å±‚å°è£…æŽ¥å£
+ è¾“å…¥å‚æ•°  : sCmPacket* psCmPacket  
              UINT8 * pBuf           
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ³¤¶ÈÕýÖµÎªÕýÈ·, ¸ºÖµÎª´íÎó
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : é•¿åº¦æ­£å€¼ä¸ºæ­£ç¡®, è´Ÿå€¼ä¸ºé”™è¯¯
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê7ÔÂ10ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´7æœˆ10æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 INT32 ncm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf)
@@ -1126,20 +1126,20 @@ INT32 ncm_3761_pack(sCmPacket* psCmPacket, UINT8 * pBuf)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : ncm_3761_unpack
- ¹¦ÄÜÃèÊö  : ½â·â×°ÉÏ²ã½Ó¿Ú·â×°
- ÊäÈë²ÎÊý  : UINT8 * pBuf           
+ å‡½ æ•° å  : ncm_3761_unpack
+ åŠŸèƒ½æè¿°  : è§£å°è£…ä¸Šå±‚æŽ¥å£å°è£…
+ è¾“å…¥å‚æ•°  : UINT8 * pBuf           
              UINT16 usBufLen        
              sCmPacket* psCmPacket  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : ÕýÖµÎªÕýÈ·³¤¶È, ¸ºÖµÎª´íÎó
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : æ­£å€¼ä¸ºæ­£ç¡®é•¿åº¦, è´Ÿå€¼ä¸ºé”™è¯¯
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê7ÔÂ10ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´7æœˆ10æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 INT32 ncm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
@@ -1161,21 +1161,21 @@ INT32 ncm_3761_unpack(UINT8 * pBuf, UINT16 usBufLen, sCmPacket* psCmPacket)
 }
 
 /*****************************************************************************
- º¯ Êý Ãû  : ncm_3761_checkAndGetPacket
- ¹¦ÄÜÃèÊö  : 3761»ñµÃµÚÒ»¸öÓÐÐ§Ö¡Î»ÖÃ¼°³¤¶È
- ÊäÈë²ÎÊý  : UINT8  *pinBuf       
+ å‡½ æ•° å  : ncm_3761_checkAndGetPacket
+ åŠŸèƒ½æè¿°  : 3761èŽ·å¾—ç¬¬ä¸€ä¸ªæœ‰æ•ˆå¸§ä½ç½®åŠé•¿åº¦
+ è¾“å…¥å‚æ•°  : UINT8  *pinBuf       
              UINT16 usLen         
              UINT16 *pusFirstOff  
              UINT16 *pusFirstLen  
- Êä³ö²ÎÊý  : ÎÞ
- ·µ »Ø Öµ  : 0 ÊÇÕýÈ·, ¸ºÖµÊÇ´íÎó
- µ÷ÓÃº¯Êý  : 
- ±»µ÷º¯Êý  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å›ž å€¼  : 0 æ˜¯æ­£ç¡®, è´Ÿå€¼æ˜¯é”™è¯¯
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ÐÞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê7ÔÂ10ÈÕ
-    ×÷    Õß   : ÀîÃ÷
-    ÐÞ¸ÄÄÚÈÝ   : ÐÂÉú³Éº¯Êý
+ ä¿®æ”¹åŽ†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´7æœˆ10æ—¥
+    ä½œ    è€…   : æŽæ˜Ž
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 INT32 ncm_3761_checkAndGetPacket(UINT8  *pinBuf, UINT16 usLen, UINT16 *pusFirstOff, UINT16 *pusFirstLen)
